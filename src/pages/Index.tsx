@@ -1,13 +1,36 @@
-// Update this page (the content is just a fallback if you fail to update the page)
 
-const Index = () => {
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import MoodSelector from '@/components/MoodSelector';
+import { Mood, User } from '@/lib/types';
+
+interface IndexProps {
+  updateUser: (user: Partial<User>) => void;
+}
+
+const Index = ({ updateUser }: IndexProps) => {
+  const navigate = useNavigate();
+  
+  const handleMoodSelect = (mood: Mood) => {
+    updateUser({ currentMood: mood });
+    
+    // Animate transition to feed
+    setTimeout(() => {
+      navigate('/feed');
+    }, 300);
+  };
+  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <motion.div 
+      className="min-h-[80vh] flex flex-col items-center justify-center"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <MoodSelector onMoodSelect={handleMoodSelect} />
+    </motion.div>
   );
 };
 
