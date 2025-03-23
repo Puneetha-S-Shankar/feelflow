@@ -1,3 +1,4 @@
+
 import { Mood, MoodOption, Post, SubEmotion } from './types';
 
 export const moodOptions: MoodOption[] = [
