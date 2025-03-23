@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { X, SlidersHorizontal } from 'lucide-react';
+import { X, SlidersHorizontal, MessageCircle } from 'lucide-react';
 import { User } from '@/lib/types';
 
 interface SettingsModalProps {
@@ -31,6 +31,28 @@ const SettingsModal = ({ isOpen, onClose, user, updateUser }: SettingsModalProps
         settings: {
           ...user.settings,
           moodFilterStrength: strength
+        }
+      });
+    }
+  };
+  
+  const handleToggleSentimentTracking = () => {
+    if (updateUser && user) {
+      updateUser({
+        settings: {
+          ...user.settings,
+          sentimentTrackingEnabled: !user.settings.sentimentTrackingEnabled
+        }
+      });
+    }
+  };
+  
+  const handleToggleAIAssist = () => {
+    if (updateUser && user) {
+      updateUser({
+        settings: {
+          ...user.settings,
+          aiAssistEnabled: !user.settings.aiAssistEnabled
         }
       });
     }
@@ -66,6 +88,7 @@ const SettingsModal = ({ isOpen, onClose, user, updateUser }: SettingsModalProps
         </div>
         
         <div className="space-y-6">
+          {/* Mood Filters Section */}
           <div>
             <h3 className="text-lg font-medium mb-3">Mood Filters</h3>
             
@@ -107,6 +130,44 @@ const SettingsModal = ({ isOpen, onClose, user, updateUser }: SettingsModalProps
             )}
           </div>
           
+          {/* AI Assistant Section */}
+          <div>
+            <h3 className="text-lg font-medium mb-3">AI Assistant</h3>
+            
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <p className="font-medium">Enable sentiment tracking</p>
+                <p className="text-sm text-muted-foreground">Analyze your comments to detect your mood</p>
+              </div>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  className="sr-only peer"
+                  checked={user?.settings.sentimentTrackingEnabled}
+                  onChange={handleToggleSentimentTracking}
+                />
+                <div className="w-11 h-6 bg-secondary rounded-full peer peer-checked:bg-primary peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+              </label>
+            </div>
+            
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <p className="font-medium">Enable AI assistance</p>
+                <p className="text-sm text-muted-foreground">Get emotional support when needed</p>
+              </div>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  className="sr-only peer"
+                  checked={user?.settings.aiAssistEnabled}
+                  onChange={handleToggleAIAssist}
+                />
+                <div className="w-11 h-6 bg-secondary rounded-full peer peer-checked:bg-primary peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+              </label>
+            </div>
+          </div>
+          
+          {/* Privacy Section */}
           <div>
             <h3 className="text-lg font-medium mb-3">Privacy</h3>
             <div className="flex items-center justify-between">

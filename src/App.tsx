@@ -26,6 +26,8 @@ const App = () => {
     settings: {
       moodFilterEnabled: true,
       moodFilterStrength: "medium",
+      aiAssistEnabled: true,
+      sentimentTrackingEnabled: true
     }
   });
 
