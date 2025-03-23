@@ -1,28 +1,34 @@
+
 import { Comment, Sentiment, Mood } from './types';
 
-// Simple sentiment analysis function to detect emotional state
+// Enhanced sentiment analysis function to detect emotional state with more nuance
 export const analyzeSentiment = (text: string): Sentiment => {
   const lowerText = text.toLowerCase();
   
-  // Distressed keywords
+  // Distressed keywords (expanded for better detection)
   const distressedWords = [
     'depressed', 'suicidal', 'hopeless', 'worthless', 'dying', 
     'can\'t take it', 'end it all', 'kill myself', 'hate myself', 
-    'don\'t want to live', 'no reason to live', 'giving up'
+    'don\'t want to live', 'no reason to live', 'giving up',
+    'can\'t handle', 'overwhelmed', 'too much', 'breaking down'
   ];
   
-  // Negative emotion keywords
+  // Negative emotion keywords (expanded)
   const negativeWords = [
     'sad', 'angry', 'upset', 'frustrated', 'annoyed', 'tired', 
     'exhausted', 'hate', 'dislike', 'awful', 'terrible', 'horrible', 
-    'anxious', 'worried', 'stressed', 'depressing', 'disappointing'
+    'anxious', 'worried', 'stressed', 'depressing', 'disappointing',
+    'lonely', 'miserable', 'hurt', 'betrayed', 'rejected', 'ignored',
+    'struggling', 'failing', 'lost', 'confused', 'unsure'
   ];
   
-  // Positive emotion keywords
+  // Positive emotion keywords (expanded)
   const positiveWords = [
     'happy', 'excited', 'great', 'wonderful', 'amazing', 'love', 
     'like', 'enjoy', 'beautiful', 'fantastic', 'awesome', 'good', 
-    'excellent', 'pleased', 'delighted', 'grateful', 'thankful'
+    'excellent', 'pleased', 'delighted', 'grateful', 'thankful',
+    'blessed', 'hopeful', 'inspiring', 'motivated', 'peaceful',
+    'content', 'satisfied', 'accomplished', 'proud', 'confident'
   ];
   
   // Check for distressed sentiment first (highest priority)
@@ -121,29 +127,33 @@ export const analyzeUserComments = (comments: Comment[]): Mood | undefined => {
   return deriveMoodFromSentiment(dominantSentiment);
 };
 
-// Generate a supportive response based on detected sentiment
+// Enhanced supportive responses based on detected sentiment
 export const generateSupportiveResponse = (sentiment: Sentiment): string => {
   const responses = {
     distressed: [
       "I noticed you might be going through a difficult time. Would you like to talk about it?",
       "I'm here for you. It's okay to take a break if you need one. Would you like some resources that might help?",
       "Your wellbeing matters. Would it help to connect with supportive resources or communities?",
-      "I'm concerned about how you're feeling. Would you like to talk or perhaps consider reaching out to someone you trust?"
+      "I'm concerned about how you're feeling. Would you like to talk or perhaps consider reaching out to someone you trust?",
+      "Sometimes things can feel overwhelming. Would you like me to suggest some coping strategies or resources?"
     ],
     negative: [
       "It seems like you might be feeling down. Would you like to see some content that might lift your spirits?",
       "I've noticed your comments reflect some frustration. Would you like me to adjust your feed to show more positive content?",
-      "Sometimes a change of perspective can help. Would you like to explore some different content?"
+      "Sometimes a change of perspective can help. Would you like to explore some different content?",
+      "Would it help to take a short break or see some uplifting content instead?"
     ],
     neutral: [
       "How are you feeling today? I'm here if you need anything.",
       "Is there anything specific you'd like to see in your feed today?",
-      "Let me know if you'd like any adjustments to your content preferences."
+      "Let me know if you'd like any adjustments to your content preferences.",
+      "I'm here to help make your browsing experience better. Any preferences for today?"
     ],
     positive: [
       "It's great to see you in good spirits! Would you like to see more content that matches your mood?",
       "Your positivity is wonderful! I'll keep showing you content that maintains this vibe.",
-      "Glad to see you're enjoying the content! Any specific topics you'd like to explore more?"
+      "Glad to see you're enjoying the content! Any specific topics you'd like to explore more?",
+      "I'm happy you're feeling good! Would you like me to recommend some more content you might enjoy?"
     ]
   };
   
@@ -181,4 +191,17 @@ export const generateMockComments = (): Comment[] => {
       sentiment: 'neutral'
     }
   ];
+};
+
+// New: Get mental health resources based on detected level of distress
+export const getMentalHealthResources = (severity: 'low' | 'medium' | 'high'): string => {
+  const resources = {
+    low: "Here are some self-care suggestions:\n\n• Take a social media break\n• Practice deep breathing exercises\n• Go for a short walk outdoors\n• Listen to music you enjoy\n• Write down your thoughts",
+    
+    medium: "These resources might be helpful:\n\n• 7 Cups: Free online chat support\n• BetterHelp: Online counseling\n• Headspace: Guided meditation app\n• Journal prompts for emotional processing\n• Local support groups",
+    
+    high: "If you're going through a difficult time, please consider these resources:\n\n• Crisis Text Line: Text HOME to 741741\n• National Suicide Prevention Lifeline: 988\n• BetterHelp: Online counseling\n• Local emergency services: 911\n• Nearest emergency room"
+  };
+  
+  return resources[severity];
 };

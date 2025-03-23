@@ -13,6 +13,21 @@ interface FilteredContentProps {
 }
 
 const FilteredContent = ({ posts, currentMood, detectedMood }: FilteredContentProps) => {
+  // Helper function to get a friendly description of the mood
+  const getMoodDescription = (mood: Mood): string => {
+    const descriptions = {
+      'happy': 'happy and positive',
+      'sad': 'a bit down',
+      'angry': 'frustrated or upset',
+      'stressed': 'under pressure',
+      'anxious': 'worried or anxious',
+      'excited': 'excited and enthusiastic',
+      'calm': 'peaceful and relaxed'
+    };
+    
+    return descriptions[mood] || mood;
+  };
+  
   return (
     <div>
       {currentMood && (
@@ -30,7 +45,7 @@ const FilteredContent = ({ posts, currentMood, detectedMood }: FilteredContentPr
             <Alert className="mt-3 bg-secondary/50 border-none">
               <AlertDescription className="text-xs flex items-center">
                 <Info size={14} className="mr-2 flex-shrink-0" />
-                We noticed your comments suggest you might be feeling {detectedMood}. We've adjusted your feed accordingly.
+                We noticed your recent comments suggest you might be feeling {getMoodDescription(detectedMood)}. We've adjusted your feed to match your current emotional state.
               </AlertDescription>
             </Alert>
           )}
