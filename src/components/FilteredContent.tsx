@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import FeedItem from './FeedItem';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { InfoCircle } from 'lucide-react';
+import { Info } from 'lucide-react';
 import { Post, Mood } from '@/lib/types';
 
 interface FilteredContentProps {
@@ -29,7 +29,7 @@ const FilteredContent = ({ posts, currentMood, detectedMood }: FilteredContentPr
           {detectedMood && detectedMood !== currentMood && (
             <Alert className="mt-3 bg-secondary/50 border-none">
               <AlertDescription className="text-xs flex items-center">
-                <InfoCircle size={14} className="mr-2 flex-shrink-0" />
+                <Info size={14} className="mr-2 flex-shrink-0" />
                 We noticed your comments suggest you might be feeling {detectedMood}. We've adjusted your feed accordingly.
               </AlertDescription>
             </Alert>
