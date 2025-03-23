@@ -54,12 +54,18 @@ const Feed = ({ user, updateUser }: FeedProps) => {
       : user.currentMood;
     
     const filteredPosts = user.settings.moodFilterEnabled 
-      ? filterPostsByMood(allPosts, filterMood, user.settings.moodFilterStrength)
+      ? filterPostsByMood(
+          allPosts, 
+          filterMood, 
+          user.settings.moodFilterStrength,
+          user.currentSubEmotion
+        )
       : allPosts;
     
     setPosts(filteredPosts);
   }, [
-    user.currentMood, 
+    user.currentMood,
+    user.currentSubEmotion,
     user.detectedMood,
     user.settings.moodFilterEnabled, 
     user.settings.moodFilterStrength,
@@ -70,7 +76,8 @@ const Feed = ({ user, updateUser }: FeedProps) => {
     <Layout user={user} updateUser={updateUser}>
       <FilteredContent 
         posts={posts} 
-        currentMood={user.currentMood} 
+        currentMood={user.currentMood}
+        currentSubEmotion={user.currentSubEmotion}
         detectedMood={user.detectedMood}
       />
       <AIAssistant user={user} updateUser={updateUser} />

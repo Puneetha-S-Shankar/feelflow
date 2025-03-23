@@ -1,5 +1,4 @@
-
-import { Mood, MoodOption, Post } from './types';
+import { Mood, MoodOption, Post, SubEmotion } from './types';
 
 export const moodOptions: MoodOption[] = [
   {
@@ -7,49 +6,203 @@ export const moodOptions: MoodOption[] = [
     label: 'Happy',
     icon: '😊',
     description: 'I feel good and positive',
-    color: '#FFD166'
+    color: '#FFD166',
+    subEmotions: [
+      {
+        id: 'joyful',
+        label: 'Joyful',
+        description: 'Feeling delighted and full of joy'
+      },
+      {
+        id: 'grateful',
+        label: 'Grateful',
+        description: 'Appreciative of people and things in life'
+      },
+      {
+        id: 'content',
+        label: 'Content',
+        description: 'Satisfied with life as it is'
+      },
+      {
+        id: 'proud',
+        label: 'Proud',
+        description: 'Feeling accomplished and confident'
+      }
+    ]
   },
   {
     id: 'sad',
     label: 'Sad',
     icon: '😔',
     description: 'I feel down or blue',
-    color: '#118AB2'
+    color: '#118AB2',
+    subEmotions: [
+      {
+        id: 'lonely',
+        label: 'Lonely',
+        description: 'Feeling isolated or disconnected'
+      },
+      {
+        id: 'disappointed',
+        label: 'Disappointed',
+        description: 'Let down by someone or something'
+      },
+      {
+        id: 'grief',
+        label: 'Grief',
+        description: 'Mourning a loss or change'
+      },
+      {
+        id: 'regretful',
+        label: 'Regretful',
+        description: 'Wishing things had gone differently'
+      }
+    ]
   },
   {
     id: 'angry',
     label: 'Angry',
     icon: '😠',
     description: 'I feel frustrated or upset',
-    color: '#EF476F'
+    color: '#EF476F',
+    subEmotions: [
+      {
+        id: 'frustrated',
+        label: 'Frustrated',
+        description: 'Feeling blocked from goals or desires'
+      },
+      {
+        id: 'irritated',
+        label: 'Irritated',
+        description: 'Annoyed by small things'
+      },
+      {
+        id: 'resentful',
+        label: 'Resentful',
+        description: 'Harboring bitterness about past events'
+      },
+      {
+        id: 'betrayed',
+        label: 'Betrayed',
+        description: 'Trust broken by someone important'
+      }
+    ]
   },
   {
     id: 'stressed',
     label: 'Stressed',
     icon: '😫',
     description: 'I feel overwhelmed',
-    color: '#073B4C'
+    color: '#073B4C',
+    subEmotions: [
+      {
+        id: 'overwhelmed',
+        label: 'Overwhelmed',
+        description: 'Too many responsibilities to handle'
+      },
+      {
+        id: 'pressured',
+        label: 'Pressured',
+        description: 'Feeling forced to meet expectations'
+      },
+      {
+        id: 'burnout',
+        label: 'Burnout',
+        description: 'Exhausted from prolonged stress'
+      },
+      {
+        id: 'restless',
+        label: 'Restless',
+        description: 'Unable to relax or settle down'
+      }
+    ]
   },
   {
     id: 'anxious',
     label: 'Anxious',
     icon: '😰',
     description: 'I feel worried or nervous',
-    color: '#6A4C93'
+    color: '#6A4C93',
+    subEmotions: [
+      {
+        id: 'fearful',
+        label: 'Fearful',
+        description: 'Afraid of what might happen'
+      },
+      {
+        id: 'worried',
+        label: 'Worried',
+        description: 'Concerned about particular issues'
+      },
+      {
+        id: 'nervous',
+        label: 'Nervous',
+        description: 'Tense about upcoming events'
+      },
+      {
+        id: 'insecure',
+        label: 'Insecure',
+        description: 'Lacking confidence in yourself'
+      }
+    ]
   },
   {
     id: 'excited',
     label: 'Excited',
     icon: '🤩',
     description: 'I feel energetic and enthusiastic',
-    color: '#FF9E00'
+    color: '#FF9E00',
+    subEmotions: [
+      {
+        id: 'enthusiastic',
+        label: 'Enthusiastic',
+        description: 'Eagerly interested in something'
+      },
+      {
+        id: 'eager',
+        label: 'Eager',
+        description: 'Looking forward to what's coming'
+      },
+      {
+        id: 'hopeful',
+        label: 'Hopeful',
+        description: 'Optimistic about future possibilities'
+      },
+      {
+        id: 'inspired',
+        label: 'Inspired',
+        description: 'Creatively stimulated by ideas'
+      }
+    ]
   },
   {
     id: 'calm',
     label: 'Calm',
     icon: '😌',
     description: 'I feel peaceful and relaxed',
-    color: '#06D6A0'
+    color: '#06D6A0',
+    subEmotions: [
+      {
+        id: 'peaceful',
+        label: 'Peaceful',
+        description: 'Free from disturbance or conflict'
+      },
+      {
+        id: 'relaxed',
+        label: 'Relaxed',
+        description: 'Free from tension and anxiety'
+      },
+      {
+        id: 'mindful',
+        label: 'Mindful',
+        description: 'Present and aware in the moment'
+      },
+      {
+        id: 'balanced',
+        label: 'Balanced',
+        description: 'Everything feels in harmony'
+      }
+    ]
   }
 ];
 
@@ -95,7 +248,12 @@ export const getComplementaryMood = (mood: Mood): Mood[] => {
   }
 };
 
-export const filterPostsByMood = (posts: Post[], currentMood: Mood, filterStrength: 'low' | 'medium' | 'high'): Post[] => {
+export const filterPostsByMood = (
+  posts: Post[], 
+  currentMood: Mood, 
+  filterStrength: 'low' | 'medium' | 'high',
+  currentSubEmotion?: SubEmotion
+): Post[] => {
   if (!currentMood) return posts;
   
   const contrastMoods = getContrastMood(currentMood);
@@ -105,13 +263,20 @@ export const filterPostsByMood = (posts: Post[], currentMood: Mood, filterStreng
     // Check if post has any contrasting moods
     const hasContrastingMood = post.mood.some(mood => contrastMoods.includes(mood));
     
-    // Apply different filtering based on strength
+    // Enhanced filtering based on subEmotion if available
+    // This makes the filtering more precise when a subEmotion is selected
+    let filterProbability = 0;
+    
     if (hasContrastingMood) {
       if (filterStrength === 'high') {
-        return { ...post, filtered: true };
-      } else if (filterStrength === 'medium' && Math.random() > 0.3) {
-        return { ...post, filtered: true };
-      } else if (filterStrength === 'low' && Math.random() > 0.7) {
+        filterProbability = currentSubEmotion ? 1.0 : 0.9; // Stronger filtering with subEmotion
+      } else if (filterStrength === 'medium') {
+        filterProbability = currentSubEmotion ? 0.8 : 0.7;
+      } else if (filterStrength === 'low') {
+        filterProbability = currentSubEmotion ? 0.4 : 0.3;
+      }
+      
+      if (Math.random() < filterProbability) {
         return { ...post, filtered: true };
       }
     }

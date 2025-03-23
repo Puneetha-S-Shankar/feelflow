@@ -1,9 +1,9 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import MoodSelector from '@/components/MoodSelector';
-import { Mood, User } from '@/lib/types';
+import { Mood, SubEmotion, User } from '@/lib/types';
 
 interface IndexProps {
   updateUser: (user: Partial<User>) => void;
@@ -12,8 +12,11 @@ interface IndexProps {
 const Index = ({ updateUser }: IndexProps) => {
   const navigate = useNavigate();
   
-  const handleMoodSelect = (mood: Mood) => {
-    updateUser({ currentMood: mood });
+  const handleMoodSelect = (mood: Mood, subEmotion?: SubEmotion) => {
+    updateUser({ 
+      currentMood: mood,
+      currentSubEmotion: subEmotion
+    });
     
     // Animate transition to feed
     setTimeout(() => {

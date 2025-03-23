@@ -17,7 +17,7 @@ import { AnimatePresence } from "framer-motion";
 const queryClient = new QueryClient();
 
 const App = () => {
-  // Default user state
+  // Default user state - updated with currentSubEmotion
   const [user, setUser] = useState<User>({
     id: "1",
     username: "user",

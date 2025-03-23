@@ -4,17 +4,27 @@ import { motion } from 'framer-motion';
 import FeedItem from './FeedItem';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Info } from 'lucide-react';
-import { Post, Mood } from '@/lib/types';
+import { Post, Mood, SubEmotion } from '@/lib/types';
+import { moodOptions } from '@/lib/moodUtils';
 
 interface FilteredContentProps {
   posts: Post[];
   currentMood?: Mood;
+  currentSubEmotion?: SubEmotion;
   detectedMood?: Mood;
 }
 
-const FilteredContent = ({ posts, currentMood, detectedMood }: FilteredContentProps) => {
+const FilteredContent = ({ posts, currentMood, currentSubEmotion, detectedMood }: FilteredContentProps) => {
   // Helper function to get a friendly description of the mood
-  const getMoodDescription = (mood: Mood): string => {
+  const getMoodDescription = (mood: Mood, subEmotion?: SubEmotion): string => {
+    if (subEmotion) {
+      const moodOption = moodOptions.find(m => m.id === mood);
+      const subEmotionOption = moodOption?.subEmotions.find(se => se.id === subEmotion);
+      if (subEmotionOption) {
+        return subEmotionOption.label.toLowerCase();
+      }
+    }
+    
     const descriptions = {
       'happy': 'happy and positive',
       'sad': 'a bit down',
@@ -38,7 +48,10 @@ const FilteredContent = ({ posts, currentMood, detectedMood }: FilteredContentPr
           transition={{ duration: 0.4, delay: 0.1 }}
         >
           <p className="text-sm text-center">
-            <span className="font-medium">Mood filter active:</span> Your feed is being personalized based on your {detectedMood ? 'detected' : 'selected'} mood.
+            <span className="font-medium">Mood filter active:</span> Your feed is being personalized based on your {detectedMood ? 'detected' : 'selected'} mood
+            {currentSubEmotion && !detectedMood && (
+              <> - specifically feeling <span className="font-medium">{getMoodDescription(currentMood, currentSubEmotion)}</span></>
+            )}.
           </p>
           
           {detectedMood && detectedMood !== currentMood && (

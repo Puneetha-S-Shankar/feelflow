@@ -1,5 +1,26 @@
-
 export type Mood = 'happy' | 'sad' | 'angry' | 'stressed' | 'anxious' | 'excited' | 'calm';
+
+export type SubEmotion = 
+  // Happy sub-emotions
+  'joyful' | 'grateful' | 'content' | 'proud' | 
+  // Sad sub-emotions
+  'lonely' | 'disappointed' | 'grief' | 'regretful' | 
+  // Angry sub-emotions
+  'frustrated' | 'irritated' | 'resentful' | 'betrayed' | 
+  // Stressed sub-emotions
+  'overwhelmed' | 'pressured' | 'burnout' | 'restless' | 
+  // Anxious sub-emotions
+  'fearful' | 'worried' | 'nervous' | 'insecure' | 
+  // Excited sub-emotions
+  'enthusiastic' | 'eager' | 'hopeful' | 'inspired' | 
+  // Calm sub-emotions
+  'peaceful' | 'relaxed' | 'mindful' | 'balanced';
+
+export interface SubEmotionOption {
+  id: SubEmotion;
+  label: string;
+  description: string;
+}
 
 export interface MoodOption {
   id: Mood;
@@ -7,6 +28,7 @@ export interface MoodOption {
   icon: string;
   description: string;
   color: string;
+  subEmotions: SubEmotionOption[];
 }
 
 export interface Post {
@@ -41,6 +63,7 @@ export interface User {
   name: string;
   avatar: string;
   currentMood?: Mood;
+  currentSubEmotion?: SubEmotion;
   detectedMood?: Mood;
   settings: {
     moodFilterEnabled: boolean;
