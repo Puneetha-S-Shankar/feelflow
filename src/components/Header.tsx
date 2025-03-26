@@ -21,7 +21,7 @@ const Header = ({ user, toggleSettingsModal }: HeaderProps) => {
           to="/" 
           className="text-xl font-semibold flex items-center"
         >
-          <span className="mr-2">feelflow</span>
+          <span className="mr-2">moodgram</span>
           <Moon className="h-5 w-5" />
         </Link>
         
