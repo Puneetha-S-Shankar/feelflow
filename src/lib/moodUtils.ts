@@ -162,7 +162,7 @@ export const moodOptions: MoodOption[] = [
       {
         id: 'eager',
         label: 'Eager',
-        description: 'Looking forward to what's coming'
+        description: 'Looking forward to what\'s coming'
       },
       {
         id: 'hopeful',
